@@ -7,6 +7,7 @@
  * ************************************
  */
 
+import regeneratorRuntime from 'regenerator-runtime';
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import GaugeChart from 'react-gauge-chart';

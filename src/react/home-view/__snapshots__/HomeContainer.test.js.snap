@@ -1,0 +1,287 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HomeContainer renders and matches the snapshot 1`] = `
+<div>
+  <div
+    class="MuiBox-root css-dud83n"
+  >
+    <header
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionRelative css-q8h8ku-MuiPaper-root-MuiAppBar-root"
+    >
+      <div
+        class="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular css-1t29gy6-MuiToolbar-root"
+      >
+        <div
+          class="MuiTypography-root MuiTypography-h5 css-1f8a19r-MuiTypography-root"
+        >
+          Cluster View
+        </div>
+      </div>
+    </header>
+    <div
+      class="MuiContainer-root MuiContainer-maxWidthLg css-1dev4xc-MuiContainer-root"
+    >
+      <div
+        class="MuiContainer-root MuiContainer-maxWidthLg css-1i84yx-MuiContainer-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-undefined css-1lym95h-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 ClusterOverview-flex ClusterOverview-metricsItem css-1sr9zam-MuiGrid-root"
+          >
+            <div
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation5 css-1moa4hq-MuiPaper-root"
+            >
+              <h5>
+                Total Nodes
+              </h5>
+              <span>
+                0
+              </span>
+            </div>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 ClusterOverview-flex ClusterOverview-metricsItem css-1sr9zam-MuiGrid-root"
+          >
+            <div
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation5 css-1moa4hq-MuiPaper-root"
+            >
+              <h5>
+                Total Deployments
+              </h5>
+              <span />
+            </div>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-undefined MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 ClusterOverview-flex ClusterOverview-metricsItem css-14a8vk9-MuiGrid-root"
+          >
+            <div
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation5 css-1moa4hq-MuiPaper-root"
+            >
+              <h5>
+                Total Pods
+              </h5>
+              <span>
+                0
+              </span>
+            </div>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 ClusterOverview-flex ClusterOverview-metricsItem css-1sr9zam-MuiGrid-root"
+          >
+            <div
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation5 css-1moa4hq-MuiPaper-root"
+            >
+              <h5>
+                Total Services
+              </h5>
+              <span>
+                0
+              </span>
+            </div>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 ClusterOverview-flex ClusterOverview-graphItem css-1sr9zam-MuiGrid-root"
+          >
+            <div
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation5 css-1moa4hq-MuiPaper-root"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1em9ut6-MuiGrid-root"
+              >
+                <h3>
+                  CPU Usage
+                </h3>
+                <div
+                  id="gauge-chart"
+                  style="width: 100%;"
+                >
+                  <svg
+                    height="0"
+                    width="0"
+                  >
+                    <g
+                      transform="translate(0, 0)"
+                    >
+                      <g
+                        class="doughnut"
+                        transform="translate(0, 0)"
+                      >
+                        <g
+                          class="arc"
+                        >
+                          <path
+                            d="M0,0Z"
+                            style="fill: #29648A;"
+                          />
+                        </g>
+                        <g
+                          class="arc"
+                        >
+                          <path
+                            d="M0,0Z"
+                            style="fill: #F8E9A1;"
+                          />
+                        </g>
+                        <g
+                          class="arc"
+                        >
+                          <path
+                            d="M0,0Z"
+                            style="fill: #F76C6C;"
+                          />
+                        </g>
+                      </g>
+                      <g
+                        class="needle"
+                        transform="translate(0, 0)"
+                      >
+                        <path
+                          d="M 0 0 L 0 0 L 0 0"
+                          fill="#FFF"
+                        />
+                        <circle
+                          cx="0"
+                          cy="0"
+                          fill="#464A4F"
+                          r="0"
+                        />
+                      </g>
+                      <g
+                        class="text-group"
+                        transform="translate(0, 20)"
+                      >
+                        <text
+                          style="font-size: 0px; fill: #FFF; text-anchor: middle;"
+                        >
+                          0%
+                        </text>
+                      </g>
+                    </g>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 ClusterOverview-flex ClusterOverview-graphItem css-1sr9zam-MuiGrid-root"
+          >
+            <div
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation5 css-1moa4hq-MuiPaper-root"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1em9ut6-MuiGrid-root"
+              >
+                <h3>
+                  Memory Usage
+                </h3>
+                <div
+                  id="gauge-chart"
+                  style="width: 100%;"
+                >
+                  <svg
+                    height="0"
+                    width="0"
+                  >
+                    <g
+                      transform="translate(0, 0)"
+                    >
+                      <g
+                        class="doughnut"
+                        transform="translate(0, 0)"
+                      >
+                        <g
+                          class="arc"
+                        >
+                          <path
+                            d="M0,0Z"
+                            style="fill: #29648A;"
+                          />
+                        </g>
+                        <g
+                          class="arc"
+                        >
+                          <path
+                            d="M0,0Z"
+                            style="fill: #F8E9A1;"
+                          />
+                        </g>
+                        <g
+                          class="arc"
+                        >
+                          <path
+                            d="M0,0Z"
+                            style="fill: #F76C6C;"
+                          />
+                        </g>
+                      </g>
+                      <g
+                        class="needle"
+                        transform="translate(0, 0)"
+                      >
+                        <path
+                          d="M 0 0 L 0 0 L 0 0"
+                          fill="#FFF"
+                        />
+                        <circle
+                          cx="0"
+                          cy="0"
+                          fill="#464A4F"
+                          r="0"
+                        />
+                      </g>
+                      <g
+                        class="text-group"
+                        transform="translate(0, 20)"
+                      >
+                        <text
+                          style="font-size: 0px; fill: #FFF; text-anchor: middle;"
+                        >
+                          0%
+                        </text>
+                      </g>
+                    </g>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="MuiContainer-root MuiContainer-maxWidthLg css-1oqqzyl-MuiContainer-root"
+    >
+      <div
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-3su884-MuiPaper-root"
+      >
+        <div
+          class="MuiTypography-root MuiTypography-h6 css-hrpwek-MuiTypography-root"
+        >
+          Running Nodes
+        </div>
+      </div>
+      <div
+        class="MuiContainer-root MuiContainer-maxWidthLg css-358tw1-MuiContainer-root"
+      />
+    </div>
+    <div
+      class="MuiContainer-root MuiContainer-maxWidthLg css-1oqqzyl-MuiContainer-root"
+    >
+      <div
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-3su884-MuiPaper-root"
+      >
+        <div
+          class="MuiTypography-root MuiTypography-h6 css-hrpwek-MuiTypography-root"
+        >
+          Deployments
+        </div>
+      </div>
+      <div
+        class="MuiContainer-root MuiContainer-maxWidthLg css-rarvag-MuiContainer-root"
+      />
+    </div>
+  </div>
+</div>
+`;

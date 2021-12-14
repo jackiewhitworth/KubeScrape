@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DeploymentOverview renders and matches the snapshot 1`] = `
+<div>
+  <div
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation5 css-q53w12-MuiPaper-root"
+  >
+    <div
+      class="MuiBox-root css-0"
+    >
+      <p>
+        Deployment: 
+      </p>
+      <p>
+        Instance: 
+      </p>
+      <p>
+        Job: 
+      </p>
+      <p>
+        Namespace: 
+      </p>
+      <p>
+        Created On: 
+      </p>
+    </div>
+  </div>
+</div>
+`;

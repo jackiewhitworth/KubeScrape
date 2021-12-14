@@ -1,0 +1,16 @@
+{
+  "transform": {
+    "^.+\\.jsx?$": "./jest-transformer.js",
+    "^.+\\.svg$": "./svg-transform.js"
+  },
+  "transformIgnorePatterns": [
+    "node_modules/(?!variables/.*)"
+  ],
+  "testEnvironment": "jsdom",
+  "verbose": true,
+  "moduleFileExtensions": ["js"],
+  "moduleDirectories": ["node_modules", "src"],
+  "moduleNameMapper": {
+    "\\.(css|less|scss)$": "identity-obj-proxy"
+  }
+}

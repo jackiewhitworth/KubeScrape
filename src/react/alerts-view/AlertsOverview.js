@@ -1,3 +1,5 @@
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable no-restricted-syntax */
 /**
  * ************************************
  *
@@ -9,6 +11,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { AppBar, Box, Toolbar, Container, Typography, Paper } from '@mui/material';
+import 'regenerator-runtime/runtime';
+
 
 const primaryColor = '#25274D';
 

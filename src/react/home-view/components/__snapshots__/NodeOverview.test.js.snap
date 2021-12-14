@@ -1,0 +1,214 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NodeOverview renders and matches the snapshot 1`] = `
+<div>
+  <div
+    class="MuiContainer-root MuiContainer-maxWidthXs css-3subwl-MuiContainer-root"
+  >
+    <div
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-3su884-MuiPaper-root"
+    >
+      <div
+        class="MuiTypography-root MuiTypography-h6 MuiTypography-alignCenter css-hb1txa-MuiTypography-root"
+      >
+        Node: 
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-undefined css-1lym95h-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-6 MuiGrid-grid-lg-3 NodeOverview-flex NodeOverview-metrixItem css-1yhk66g-MuiGrid-root"
+        >
+          <span>
+            0
+          </span>
+          <h6>
+            Active Pods
+          </h6>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-6 MuiGrid-grid-lg-3 NodeOverview-flex NodeOverview-metrixItem css-1yhk66g-MuiGrid-root"
+        >
+          <span>
+            0
+          </span>
+          <h6>
+            Available Pods
+          </h6>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-6 MuiGrid-grid-lg-3 NodeOverview-flex NodeOverview-metrixItem css-1yhk66g-MuiGrid-root"
+        >
+          <span>
+            0
+             kb/s
+          </span>
+          <h6>
+            Network Utilization
+          </h6>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-6 MuiGrid-grid-lg-3 NodeOverview-flex NodeOverview-metrixItem css-1yhk66g-MuiGrid-root"
+        >
+          <span>
+            0
+          </span>
+          <h6>
+            Errors
+          </h6>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-6 NodeOverview-flex NodeOverview-graphItem css-7jaoyt-MuiGrid-root"
+        >
+          <h6>
+            Node CPU Usage
+          </h6>
+          <div
+            id="gauge-chart"
+            style="width: 100%;"
+          >
+            <svg
+              height="0"
+              width="0"
+            >
+              <g
+                transform="translate(0, 0)"
+              >
+                <g
+                  class="doughnut"
+                  transform="translate(0, 0)"
+                >
+                  <g
+                    class="arc"
+                  >
+                    <path
+                      d="M0,0Z"
+                      style="fill: #29648A;"
+                    />
+                  </g>
+                  <g
+                    class="arc"
+                  >
+                    <path
+                      d="M0,0Z"
+                      style="fill: #F8E9A1;"
+                    />
+                  </g>
+                  <g
+                    class="arc"
+                  >
+                    <path
+                      d="M0,0Z"
+                      style="fill: #F76C6C;"
+                    />
+                  </g>
+                </g>
+                <g
+                  class="needle"
+                  transform="translate(0, 0)"
+                >
+                  <path
+                    d="M 0 0 L 0 0 L 0 0"
+                    fill="#FFF"
+                  />
+                  <circle
+                    cx="0"
+                    cy="0"
+                    fill="#464A4F"
+                    r="0"
+                  />
+                </g>
+                <g
+                  class="text-group"
+                  transform="translate(0, 20)"
+                >
+                  <text
+                    style="font-size: 0px; fill: #FFF; text-anchor: middle;"
+                  >
+                    0%
+                  </text>
+                </g>
+              </g>
+            </svg>
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-6 NodeOverview-flex NodeOverview-graphItem css-7jaoyt-MuiGrid-root"
+        >
+          <h6>
+            Node Memory Usage
+          </h6>
+          <div
+            id="gauge-chart"
+            style="width: 100%;"
+          >
+            <svg
+              height="0"
+              width="0"
+            >
+              <g
+                transform="translate(0, 0)"
+              >
+                <g
+                  class="doughnut"
+                  transform="translate(0, 0)"
+                >
+                  <g
+                    class="arc"
+                  >
+                    <path
+                      d="M0,0Z"
+                      style="fill: #29648A;"
+                    />
+                  </g>
+                  <g
+                    class="arc"
+                  >
+                    <path
+                      d="M0,0Z"
+                      style="fill: #F8E9A1;"
+                    />
+                  </g>
+                  <g
+                    class="arc"
+                  >
+                    <path
+                      d="M0,0Z"
+                      style="fill: #F76C6C;"
+                    />
+                  </g>
+                </g>
+                <g
+                  class="needle"
+                  transform="translate(0, 0)"
+                >
+                  <path
+                    d="M 0 0 L 0 0 L 0 0"
+                    fill="#FFF"
+                  />
+                  <circle
+                    cx="0"
+                    cy="0"
+                    fill="#464A4F"
+                    r="0"
+                  />
+                </g>
+                <g
+                  class="text-group"
+                  transform="translate(0, 20)"
+                >
+                  <text
+                    style="font-size: 0px; fill: #FFF; text-anchor: middle;"
+                  >
+                    0%
+                  </text>
+                </g>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

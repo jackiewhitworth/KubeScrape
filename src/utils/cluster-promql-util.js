@@ -7,23 +7,26 @@
  * ************************************
  */
 
-//return the cpu usage percentage at the cluster level
-export const fetchClusterCpuUsage = async () => {
-  const data = await fetch('http://localhost:30000/api/v1/query?query=(1 - sum by (instance)(increase(node_cpu_seconds_total{mode="idle"}[5m])) / sum by (instance)(increase(node_cpu_seconds_total[5m])))*100', {
+const prometheusEndpoint = 'http://localhost:30000/api/v1/query?query=';
+const clusterCpuUsageQuery = '(1 - sum by (instance)(increase(node_cpu_seconds_total{mode="idle"}[5m])) / sum by (instance)(increase(node_cpu_seconds_total[5m])))*100';
+
+// return the cpu usage percentage at the cluster level
+export const fetchClusterCpuUsage = async (endpoint = prometheusEndpoint, query = clusterCpuUsageQuery) => {
+  const data = await fetch(`${endpoint}${query}`, {
     method: 'GET',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     }
   })
-  .then(res => res.json());
-  const clusterCpuUsage= parseInt(data.data.result[0].value[1]);
+    .then(res => res.json());
+  const clusterCpuUsage = parseInt(data.data.result[0].value[1]);
   return clusterCpuUsage;  
-}
+};
 
-//return the memory usage percentage at the cluster level
-//kube_node_status_capacity tells how much memory is available to kubernetes
-//kube_node_status_allocatable tells memory resources of a node available for scheduling
+// return the memory usage percentage at the cluster level
+// kube_node_status_capacity tells how much memory is available to kubernetes
+// kube_node_status_allocatable tells memory resources of a node available for scheduling
 export const fetchClusterMemoryUsage = async() => {
   const data = await fetch('http://localhost:30000/api/v1/query?query=(1-sum(kube_node_status_allocatable{resource="memory", unit="byte"})/sum(kube_node_status_capacity{resource="memory", unit="byte"}))*100', {
     method: 'GET',
@@ -31,10 +34,10 @@ export const fetchClusterMemoryUsage = async() => {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     }
-  }).then(res => res.json())
+  }).then(res => res.json());
   const clusterMemoryUsage = data.data.result[0].value[1];
   return clusterMemoryUsage;
-}
+};
 
 // get all nodes in the cluster
 export const fetchClusterNodes = async () => {
@@ -45,14 +48,12 @@ export const fetchClusterNodes = async () => {
       'Content-Type': 'application/json'
     }
   })
-  .then(res => res.json());
-  const nodes = data.data.result.map(result => {
-    return result.metric.node;
-  });
+    .then(res => res.json());
+  const nodes = data.data.result.map(result => result.metric.node);
   return nodes;  
-}
+};
 
-//return an array of deployments 
+// return an array of deployments 
 export const fetchTotalDeployments = async () => {
   const data = await fetch('http://localhost:30000/api/v1/query?query=kube_deployment_created', {
     method: 'GET',
@@ -61,13 +62,13 @@ export const fetchTotalDeployments = async () => {
       'Content-Type': 'application/json'
     }
   })
-  .then(res => res.json());
+    .then(res => res.json());
 
   const totalDeployments = data.data.result;
   return totalDeployments;  
-}
+};
 
-//return the total number of pods created in the cluster
+// return the total number of pods created in the cluster
 export const fetchTotalPods = async () => {
   const data = await fetch('http://localhost:30000/api/v1/query?query=count(kube_pod_created)', {
     method: 'GET',
@@ -76,12 +77,12 @@ export const fetchTotalPods = async () => {
       'Content-Type': 'application/json'
     }
   })
-  .then(res => res.json());
+    .then(res => res.json());
   const totalPods = data.data.result[0].value[1];
   return totalPods;  
-}
+};
 
-//return the total number of services in the cluster
+// return the total number of services in the cluster
 export const fetchAllServices = async () => {
   const data = await fetch('http://localhost:30000/api/v1/query?query=kube_service_created', {
     method: 'GET',
@@ -90,10 +91,10 @@ export const fetchAllServices = async () => {
       'Content-Type': 'application/json'
     }
   })
-  .then(res => res.json());
+    .then(res => res.json());
   const totalServices = data.data.result;
   return totalServices;  
-}
+};
 
 // get all namespaces in the cluster
 export const fetchAllNamespaces = async () => {
@@ -108,4 +109,4 @@ export const fetchAllNamespaces = async () => {
 
   const namespaces = data.data.result;
   return namespaces;
-}
+};
