@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 /**
  * ************************************
  *
@@ -10,7 +11,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Paper } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import * as containerPromql from '../../../utils/container-promql-util';
+import * as containerPromql from '../../../PrometheusAPI/container-promql-requests';
 import LineChart from './LineChart';
 
 // Define the following in this component's state to pass to linecharts as props:

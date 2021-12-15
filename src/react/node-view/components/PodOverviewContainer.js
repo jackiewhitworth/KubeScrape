@@ -13,7 +13,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Container, Grid } from '@mui/material';
 import PodOverview from './PodOverview';
 import * as actions from '../../../redux/actions/actions';
-import * as podPromql from '../../../utils/pod-promql-util';
+import * as podPromql from '../../../PrometheusAPI/pod-promql-requests';
 
 const PodOverviewContainer = props => {
   // extract state from Redux store

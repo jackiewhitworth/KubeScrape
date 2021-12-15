@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux';
 import GaugeChart from 'react-gauge-chart';
 import { Container, Grid, Paper } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import * as clusterPromql from '../../../utils/cluster-promql-util';
+import * as clusterPromql from '../../../PrometheusAPI/cluster-promql-requests';
  
 const ClusterOverview = () => {
   // initialize state that is rendered only in this component

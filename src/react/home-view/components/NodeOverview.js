@@ -15,8 +15,8 @@ import { Container, Grid, Paper, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import * as actions from '../../../redux/actions/actions';
 
-// fetch requests to the Prometheus server are stored as functions in utils/promql-requests.js
-import * as nodePromql from '../../../utils/node-promql-util';
+// fetch requests to the Prometheus server are stored as functions in PrometheusAPI/node-promql-requests.js
+import * as nodePromql from '../../../PrometheusAPI/node-promql-requests';
 
 // create a functional component
 const NodeOverview = props => {

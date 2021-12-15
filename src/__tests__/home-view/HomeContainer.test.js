@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import React from 'react';
-import HomeContainer from './HomeContainer';
-import renderWithRedux from '../../test-utils';
+import HomeContainer from '../../react/home-view/HomeContainer';
+import { renderWithRedux } from '../../test-utils';
 
 
 describe('HomeContainer', () => {

@@ -3,10 +3,8 @@ import React from 'react';
 import { StateMock } from '@react-mock/state';
 // import { rest } from 'msw';
 // import { setupServer } from 'msw/node';
-import ClusterOverview from './ClusterOverview';
-import { 
-  renderWithRedux, fakeClusterCpuUsage 
-} from '../../../test-utils';
+import ClusterOverview from '../../../react/home-view/components/ClusterOverview';
+import { renderWithRedux } from '../../../test-utils';
   
 // const handlers = [
 //   rest.get('/', (req, res, ctx) => res(ctx.json('testing'), ctx.delay(150)))

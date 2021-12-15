@@ -15,8 +15,8 @@ import {
   MenuItem, InputLabel 
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles'; 
-import * as containerPromql from '../../utils/container-promql-util';
-import * as podPromql from '../../utils/pod-promql-util';
+import * as containerPromql from '../../PrometheusAPI/container-promql-requests';
+import * as podPromql from '../../PrometheusAPI/pod-promql-requests';
 import ContainersGraphContainer from './components/ContainersGraphContainer';
 import PodHeader from './components/PodHeader';
 import * as actions from '../../redux/actions/actions';

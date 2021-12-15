@@ -10,6 +10,7 @@
 import React from 'react';
 import { Box, List, ListItem, Paper } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import regeneratorRuntime from 'regenerator-runtime';
 
 const Detail = styled(ListItem)(({ theme }) => ({
   display: 'flex',

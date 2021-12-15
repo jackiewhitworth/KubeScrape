@@ -1,36 +1,24 @@
-/**
- * @jest-environment jsdom
- */
+/* eslint-disable no-undef */
 import React from 'react';
-// const React = require("react");
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
-// import { render, fireEvent, screen } from '../test-utils.jsx';
 import { render, screen } from '@testing-library/react';
+import PodOverview from '../../../react/node-view/components/PodOverview';
  
-import { ReactDOM } from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-import PodOverview from './PodOverview';
-import App from '../../App';
+// export const handlers = [
+//   rest.get('/', (req, res, ctx) => res(ctx.json('testing'), ctx.delay(150)))
+// ];
  
-// import {render, fireEvent, waitFor, screen} from '@testing-library/react';
-// import '@testing-library/jest-dom';
-// import 'regenerator-runtime/runtime';
- 
-export const handlers = [
-  rest.get('/', (req, res, ctx) => res(ctx.json('testing'), ctx.delay(150)))
-];
- 
-const server = setupServer(...handlers);
+// const server = setupServer(...handlers);
  
 // Enable API mocking before tests.
-beforeAll(() => server.listen());
+// beforeAll(() => server.listen());
  
 // Reset any runtime request handlers we may add during the tests.
-afterEach(() => server.resetHandlers());
+// afterEach(() => server.resetHandlers());
  
 // Disable API mocking after the tests are done.
-afterAll(() => server.close());
+// afterAll(() => server.close());
  
  
 test('renders node details header', async() => {

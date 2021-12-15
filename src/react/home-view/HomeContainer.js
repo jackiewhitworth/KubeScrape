@@ -14,7 +14,7 @@ import { styled, useTheme } from '@mui/material/styles';
 import NodeOverview from './components/NodeOverview';
 import ClusterOverview from './components/ClusterOverview';
 import DeploymentOverview from './components/DeploymentOverview';
-import * as clusterPromql from '../../utils/cluster-promql-util';
+import * as clusterPromql from '../../PrometheusAPI/cluster-promql-requests';
 import * as actions from '../../redux/actions/actions';
 
 
