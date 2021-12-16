@@ -10,7 +10,7 @@
  * ************************************
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container, Grid, Paper, Typography } from '@mui/material';
@@ -59,7 +59,6 @@ const NodeOverview = ({ nodeName }) => {
   // the useDispatch hook returns a reference to the dispatch function from the Redux store.
   // dispatch can now be used to dispatch actions as needed
   const dispatch = useDispatch();
-
   const history = useHistory();
 
   // function to fetch prometheus data and store using redux
@@ -88,18 +87,23 @@ const NodeOverview = ({ nodeName }) => {
 
   // function to handle node click
   // TODO: wrap in useCallback
-  const goToNode = (node) => {
+  const goToNode = useCallback((node) => {
     history.push({
       pathname: '/node',
       node,
     });
-  };
+  }, []);
 
-  const headings = {
+  const infoHeadings = {
     'Active Pods': pods.length,
-    'Available Pods': pods.length - nodePodCapacity,
+    'Available Pods': nodePodCapacity,
     'Network Utilization': `${nodeNetworkUtilization} kb/s`,
     'Errors': nodeNetworkErrors
+  };
+
+  const gaugeHeadings = {
+    'Node CPU Usage': nodeCpuUsage / 100,
+    'Node Memory Usage': nodeMemoryUsage / 100
   };
 
   return (
@@ -119,19 +123,21 @@ const NodeOverview = ({ nodeName }) => {
           Node: {nodeName}
         </Typography>
         <Grid container justifyContent="center">
-          {Object.entries(headings).map(([label, value]) => (
-            <GridItem key={label} item sm={6} lg={3} className={`${classes.flex} ${classes.metricsItem}`}>
+          {Object.entries(infoHeadings).map(([heading, value]) => (
+            <GridItem key={heading} item sm={6} lg={3} className={`${classes.flex} ${classes.metricsItem}`}>
               <span>{value}</span>
-              <h6>{label}</h6>
+              <h6>{heading}</h6>
             </GridItem>
           )
           )}
-          <GridItem item lg={6} className={`${classes.flex} ${classes.graphItem}`}>
-            {renderGauge('Node CPU Usage', nodeCpuUsage / 100)}
-          </GridItem>
-          <GridItem item lg={6} className={`${classes.flex} ${classes.graphItem}`}>
-            {renderGauge('Node Memory Usage', nodeMemoryUsage / 100)}
-          </GridItem>
+
+          {Object.entries(gaugeHeadings).map(([heading, value]) => (
+            <GridItem item key={heading} lg={6} className={`${classes.flex} ${classes.graphItem}`}>
+              {renderGauge(heading, value)}
+            </GridItem>
+          )
+          )}
+
         </Grid>
       </Paper>
     </StyledContainer>
