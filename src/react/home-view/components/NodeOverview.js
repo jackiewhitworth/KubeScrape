@@ -1,3 +1,6 @@
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/no-absolute-path */
 /**
  * ************************************
  *
@@ -10,44 +13,43 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import GaugeChart from 'react-gauge-chart';
 import { Container, Grid, Paper, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import * as actions from '../../../redux/actions/actions';
+import * as actions from '/src/redux/actions/actions';
+import renderGauge from '/src/lib/renderGauge';
 
 // fetch requests to the Prometheus server are stored as functions in PrometheusAPI/node-promql-requests.js
-import * as nodePromql from '../../../PrometheusAPI/node-promql-requests';
+import * as nodePromql from '/src/PrometheusAPI/node-promql-requests';
 
-  // Styles
-  // TODO: Move up (outside component)
-  const PREFIX = 'NodeOverview';
-  const classes = {
-    flex: `${PREFIX}-flex`,
-    graphItem: `${PREFIX}-graphItem`,
-    metricsItem: `${PREFIX}-metrixItem`,
-  };
-  const StyledContainer = styled(Container)(({ theme }) => ({
-    ':hover': {
-      filter: 'brightness(150%)',
-      cursor: 'pointer',
-    },
-  }));
-  const GridItem = styled(Grid)(({ theme }) => ({
-    [`&.${classes.flex}`]: {
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'flex-start',
-      alignItems: 'center',
-    },
-    [`&.${classes.graphItem}`]: {
-      marginTop: '-15px',
-    },
-    [`&.${classes.metricsItem}`]: {
-      marginTop: '25px',
-    },
-  }));
+// Styles
+const PREFIX = 'NodeOverview';
+const classes = {
+  flex: `${PREFIX}-flex`,
+  graphItem: `${PREFIX}-graphItem`,
+  metricsItem: `${PREFIX}-metrixItem`,
+};
+const StyledContainer = styled(Container)(({ theme }) => ({
+  ':hover': {
+    filter: 'brightness(150%)',
+    cursor: 'pointer',
+  },
+}));
+const GridItem = styled(Grid)(({ theme }) => ({
+  [`&.${classes.flex}`]: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  [`&.${classes.graphItem}`]: {
+    marginTop: '-15px',
+  },
+  [`&.${classes.metricsItem}`]: {
+    marginTop: '25px',
+  },
+}));
 
-const NodeOverview = props => {
+const NodeOverview = ({ nodeName }) => {
   // useSelector allows you to extract data from the Redux store state, using a selector function
   // this function accesses the state from the nodeReducer by subscribing to the store through sseSelector
   const { nodeCpuUsage, nodeMemoryUsage, pods, nodePodCapacity } = useSelector(state => state.node);
@@ -63,7 +65,7 @@ const NodeOverview = props => {
   // function to fetch prometheus data and store using redux
   // TODO: wrap in useCallback hook to memoize
 
-  const apiRequests = [nodePromql.fetchCpuUsage(), nodePromql.fetchMemoryUsage(props.nodeName), nodePromql.fetchNodePods(props.nodeName), nodePromql.fetchPodCapacity(), nodePromql.fetchNetworkUtilization(), nodePromql.fetchNetworkErrors()]
+  const apiRequests = [nodePromql.fetchCpuUsage(), nodePromql.fetchMemoryUsage(nodeName), nodePromql.fetchNodePods(nodeName), nodePromql.fetchPodCapacity(), nodePromql.fetchNetworkUtilization(), nodePromql.fetchNetworkErrors()];
 
   const fetchDataToStore = async () => {
     const data = await Promise.all(apiRequests);
@@ -75,7 +77,6 @@ const NodeOverview = props => {
     setNodeNetworkErrors(data[5]);
   };
 
-
   // fetch data, then fetch again in 30 seconds
   // when component unmounts, cancel setInterval in a cleanup function
   useEffect(() => {
@@ -85,34 +86,21 @@ const NodeOverview = props => {
   }, []);
 
 
-
   // function to handle node click
   // TODO: wrap in useCallback
-  const goToNode = nodeName => {
+  const goToNode = (node) => {
     history.push({
       pathname: '/node',
-      nodeName,
+      node,
     });
   };
 
-  // function to render a gauge
-  const renderGauge = (title, value) => (
-    <>
-      <h6>{title}</h6>
-      <GaugeChart
-        id="gauge-chart"
-        nrOfLevels={3}
-        colors={['#29648A', '#F8E9A1', '#F76C6C']}
-        arcWidth={0.3}
-        arcPadding={0}
-        cornerRadius={0}
-        percent={value}
-        textColor="#FFF"
-        needleColor="#FFF"
-        animate={false}
-      />
-    </>
-  );
+  const headings = {
+    'Active Pods': pods.length,
+    'Available Pods': pods.length - nodePodCapacity,
+    'Network Utilization': `${nodeNetworkUtilization} kb/s`,
+    'Errors': nodeNetworkErrors
+  };
 
   return (
     <StyledContainer
@@ -128,25 +116,16 @@ const NodeOverview = props => {
             paddingTop: '20px',
           }}
         >
-          Node: {props.nodeName}
+          Node: {nodeName}
         </Typography>
         <Grid container justifyContent="center">
-          <GridItem item sm={6} lg={3} className={`${classes.flex} ${classes.metricsItem}`}>
-            <span>{pods.length}</span>
-            <h6>Active Pods</h6>
-          </GridItem>
-          <GridItem item sm={6} lg={3} className={`${classes.flex} ${classes.metricsItem}`}>
-            <span>{pods.length - nodePodCapacity}</span>
-            <h6>Available Pods</h6>
-          </GridItem>
-          <GridItem item sm={6} lg={3} className={`${classes.flex} ${classes.metricsItem}`}>
-            <span>{nodeNetworkUtilization} kb/s</span>
-            <h6>Network Utilization</h6>
-          </GridItem>
-          <GridItem item sm={6} lg={3} className={`${classes.flex} ${classes.metricsItem}`}>
-            <span>{nodeNetworkErrors}</span>
-            <h6>Errors</h6>
-          </GridItem>
+          {Object.entries(headings).map(([label, value]) => (
+            <GridItem key={label} item sm={6} lg={3} className={`${classes.flex} ${classes.metricsItem}`}>
+              <span>{value}</span>
+              <h6>{label}</h6>
+            </GridItem>
+          )
+          )}
           <GridItem item lg={6} className={`${classes.flex} ${classes.graphItem}`}>
             {renderGauge('Node CPU Usage', nodeCpuUsage / 100)}
           </GridItem>
