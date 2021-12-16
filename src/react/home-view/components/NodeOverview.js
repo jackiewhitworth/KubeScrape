@@ -15,11 +15,11 @@ import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container, Grid, Paper, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import * as actions from '/src/redux/actions/actions';
-import renderGauge from '/src/lib/renderGauge';
+import * as actions from '../../../redux/actions/actions';
+import renderGauge from '../../../lib/renderGauge';
 
 // fetch requests to the Prometheus server are stored as functions in PrometheusAPI/node-promql-requests.js
-import * as nodePromql from '/src/PrometheusAPI/node-promql-requests';
+import * as nodePromql from '../../../PrometheusAPI/node-promql-requests';
 
 // Styles
 const PREFIX = 'NodeOverview';

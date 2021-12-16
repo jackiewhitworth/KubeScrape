@@ -5,6 +5,7 @@ import { StateMock } from '@react-mock/state';
 // import { setupServer } from 'msw/node';
 import ClusterOverview from '../../../react/home-view/components/ClusterOverview';
 import { renderWithRedux } from '../../../test-utils';
+import { waitFor } from '@testing-library/react';
   
 // const handlers = [
 //   rest.get('/', (req, res, ctx) => res(ctx.json('testing'), ctx.delay(150)))
@@ -24,13 +25,15 @@ import { renderWithRedux } from '../../../test-utils';
 
 describe('ClusterOverview', () => {
 
-  it('renders and matches the snapshot', () => {
+  it('renders and matches the snapshot', async () => {
     const { container } = renderWithRedux(
       <StateMock state={{ clusterCpuUsage: 6 }}>
         <ClusterOverview />
       </StateMock>
     );
-    expect(container).toMatchSnapshot();
+    await waitFor (() => {
+      expect(container).toMatchSnapshot();
+    });
   });
 
 });
