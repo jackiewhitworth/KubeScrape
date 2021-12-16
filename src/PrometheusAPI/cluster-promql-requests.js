@@ -8,7 +8,7 @@
  *
  * ************************************
  */
-import handleHttpResponse from './handle-http-requests';
+import { handleHttpResponse } from './handle-http-requests';
 
 const prometheusEndpoint = 'http://localhost:30000/api/v1/query?query=';
 // get the cpu usage percentage at the cluster level

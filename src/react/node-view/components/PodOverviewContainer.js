@@ -24,9 +24,9 @@ const PodOverviewContainer = props => {
   const history = useHistory();
 
   useEffect(async () => {
-    const podNamesList = await podPromql.fetchPodNamesList(props.node);
+    // const podNamesList = await podPromql.fetchPodNamesList(props.node);
     const podInfoList = await podPromql.fetchPodInfoList(props.node);
-    dispatch(actions.setPodNames(podNamesList));
+    // dispatch(actions.setPodNames(podNamesList));
     dispatch(actions.setPodInfo(podInfoList));
   }, []);
 

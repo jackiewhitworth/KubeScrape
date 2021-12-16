@@ -18,46 +18,8 @@ import * as actions from '../../../redux/actions/actions';
 // fetch requests to the Prometheus server are stored as functions in PrometheusAPI/node-promql-requests.js
 import * as nodePromql from '../../../PrometheusAPI/node-promql-requests';
 
-// create a functional component
-const NodeOverview = props => {
-  // useSelector allows you to extract data from the Redux store state, using a selector function
-  // this function accesses the state from the nodeReducer by subscribing to the store through sseSelector
-  const { nodeCpuUsage, nodeMemoryUsage, pods, nodePodCapacity } = useSelector(state => state.node);
-  const [nodeNetworkUtilization, setNodeNetworkUtilization] = useState(0);
-  const [nodeNetworkErrors, setNodeNetworkErrors] = useState(0);
-
-  // the useDispatch hook returns a reference to the dispatch function from the Redux store.
-  // dispatch can now be used to dispatch actions as needed
-  const dispatch = useDispatch();
-
-  const history = useHistory();
-
-  // function to fetch prometheus data and store using redux
-  const fetchDataToStore = async () => {
-    const nodeCpuUsagePercentage = await nodePromql.fetchCpuUsage();
-    const nodeMemoryUsagePercentage = await nodePromql.fetchMemoryUsage(props.nodeName);
-    const pods = await nodePromql.fetchNodePods(props.nodeName);
-    const nodePodCapacity = await nodePromql.fetchPodCapacity();
-    const currentNetworkUtilization = await nodePromql.fetchNetworkUtilization();
-    const currentNetworkErrors = await nodePromql.fetchNetworkErrors();
-
-    dispatch(actions.setCpuUsage(nodeCpuUsagePercentage));
-    dispatch(actions.setMemoryUsage(nodeMemoryUsagePercentage));
-    dispatch(actions.setNodePods(pods));
-    dispatch(actions.setPodCapacity(nodePodCapacity));
-    setNodeNetworkUtilization(currentNetworkUtilization);
-    setNodeNetworkErrors(currentNetworkErrors);
-  };
-
-  // fetch data, then fetch again in 30 seconds
-  // when component unmounts, cancel setInterval in a cleanup function
-  useEffect(() => {
-    fetchDataToStore();
-    const interval = setInterval(() => fetchDataToStore(), 30000);
-    return () => clearInterval(interval);
-  }, []);
-
   // Styles
+  // TODO: Move up (outside component)
   const PREFIX = 'NodeOverview';
   const classes = {
     flex: `${PREFIX}-flex`,
@@ -85,7 +47,47 @@ const NodeOverview = props => {
     },
   }));
 
+const NodeOverview = props => {
+  // useSelector allows you to extract data from the Redux store state, using a selector function
+  // this function accesses the state from the nodeReducer by subscribing to the store through sseSelector
+  const { nodeCpuUsage, nodeMemoryUsage, pods, nodePodCapacity } = useSelector(state => state.node);
+  const [nodeNetworkUtilization, setNodeNetworkUtilization] = useState(0);
+  const [nodeNetworkErrors, setNodeNetworkErrors] = useState(0);
+
+  // the useDispatch hook returns a reference to the dispatch function from the Redux store.
+  // dispatch can now be used to dispatch actions as needed
+  const dispatch = useDispatch();
+
+  const history = useHistory();
+
+  // function to fetch prometheus data and store using redux
+  // TODO: wrap in useCallback hook to memoize
+
+  const apiRequests = [nodePromql.fetchCpuUsage(), nodePromql.fetchMemoryUsage(props.nodeName), nodePromql.fetchNodePods(props.nodeName), nodePromql.fetchPodCapacity(), nodePromql.fetchNetworkUtilization(), nodePromql.fetchNetworkErrors()]
+
+  const fetchDataToStore = async () => {
+    const data = await Promise.all(apiRequests);
+    dispatch(actions.setCpuUsage(data[0]));
+    dispatch(actions.setMemoryUsage(data[1]));
+    dispatch(actions.setNodePods(data[2]));
+    dispatch(actions.setPodCapacity(data[3]));
+    setNodeNetworkUtilization(data[4]);
+    setNodeNetworkErrors(data[5]);
+  };
+
+
+  // fetch data, then fetch again in 30 seconds
+  // when component unmounts, cancel setInterval in a cleanup function
+  useEffect(() => {
+    fetchDataToStore();
+    const interval = setInterval(() => fetchDataToStore(), 30000);
+    return () => clearInterval(interval);
+  }, []);
+
+
+
   // function to handle node click
+  // TODO: wrap in useCallback
   const goToNode = nodeName => {
     history.push({
       pathname: '/node',
@@ -115,7 +117,7 @@ const NodeOverview = props => {
   return (
     <StyledContainer
       maxWidth="xs"
-      onClick={() => goToNode(props.nodeName)}
+      onClick={goToNode}
     >
       <Paper elevation={3}>
         <Typography
@@ -134,7 +136,7 @@ const NodeOverview = props => {
             <h6>Active Pods</h6>
           </GridItem>
           <GridItem item sm={6} lg={3} className={`${classes.flex} ${classes.metricsItem}`}>
-            <span>{nodePodCapacity - pods.length}</span>
+            <span>{pods.length - nodePodCapacity}</span>
             <h6>Available Pods</h6>
           </GridItem>
           <GridItem item sm={6} lg={3} className={`${classes.flex} ${classes.metricsItem}`}>

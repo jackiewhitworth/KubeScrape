@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable radix */
 /**
  * ************************************
  *
@@ -8,100 +10,90 @@
  */
 
 import 'regenerator-runtime/runtime';
+import { handleHttpResponse, handleErrors } from './handle-http-requests';
 
-//return node CPU usage as a number
-export const fetchCpuUsage = async() => {
-  const data = await fetch('http://localhost:30000/api/v1/query?query=(1 - sum by (instance)(increase(node_cpu_seconds_total{mode="idle"}[5m])) / sum by (instance)(increase(node_cpu_seconds_total[5m])))*100', {
-    method: 'GET',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    }
-  })
-  .then(res => res.json())
-  const cpuUsage = parseInt(data.data.result[0].value[1]);
-  return cpuUsage;
-}
+const prometheusEndpoint = 'http://localhost:30000/api/v1/query?query=';
 
-//return node memory usage as a number
-export const fetchMemoryUsage = async(nodeName) => {
-  const data = await fetch(`http://localhost:30000/api/v1/query?query=(1-sum(kube_node_status_allocatable{resource="memory",unit="byte",node="${nodeName}"})/sum(kube_node_status_capacity{resource="memory",unit="byte",node="${nodeName}"}))*100`, {
-    method: 'GET',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    }
-  }).then(res => res.json())
-  const memoryUsage = data.data.result[0].value[1];
-  return memoryUsage;
-}
+// return node CPU usage as a number
+export const fetchCpuUsage = async(
+  endpoint = prometheusEndpoint
+) => {
+  try {
+    const response = await fetch(`${endpoint}(1 - sum by (instance)(increase(node_cpu_seconds_total{mode="idle"}[5m])) / sum by (instance)(increase(node_cpu_seconds_total[5m])))*100`)
+    const data = await handleErrors(response);
+    const cpuUsage = parseInt(data.data.result[0].value[1]);
+    return cpuUsage;
+  } catch(e) {
+    console.error('error fetching node CPU usage data');
+    return e;
+  }
+};
+
+// return node memory usage as a number
+export const fetchMemoryUsage = async(
+  nodeName,
+  endpoint = prometheusEndpoint
+) => {
+  try {
+    const response = await fetch(`${endpoint}(1-sum(kube_node_status_allocatable{resource="memory",unit="byte",node="${nodeName}"})/sum(kube_node_status_capacity{resource="memory",unit="byte",node="${nodeName}"}))*100`);
+    const data = await handleErrors(response);
+    const memoryUsage = data.data.result[0].value[1];
+    return memoryUsage;
+  } catch(e) {
+    console.error('error fetching node memory usage data');
+    return e;
+  }
+};
 
 // return all pods from a node
-export const fetchNodePods= async(nodeName) => {
-  const data = await fetch(`http://localhost:30000/api/v1/query?query=kube_pod_info{node="${nodeName}"}`, {
-    method: 'GET',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    }
-  }).then(res => res.json())
-  const podTotal= data.data.result;
-  return podTotal;
-}
+export const fetchNodePods = async(
+  nodeName,
+  endpoint = prometheusEndpoint
+) => {
+  try {
+    const response = await fetch(`${endpoint}kube_pod_info{node="${nodeName}"}`);
+    const data = await handleErrors(response);
+    const podCount = data.data.result;
+    return podCount;
+  } catch(e) {
+    console.error('error fetching node pod count');
+    return e;
+  }
+};
 
-//return pod capacity of node as a number
-export const fetchPodCapacity = async() => {
-  const data = await fetch('http://localhost:30000/api/v1/query?query=kube_node_status_capacity{resource="pods"}', {
-    method: 'GET',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    }
-  }).then(res => res.json())
-  const podCapacity= data.data.result[0].value[1];
-  return podCapacity;
-}
+// return pod capacity of node as a number
+export const fetchPodCapacity = async(endpoint = prometheusEndpoint) => {
+  try {
+    const response = await fetch(`${endpoint}kube_node_status_capacity`);
+    const data = await handleErrors(response);
+    const podCapacity = data.data.result[0].value[1];
+    return podCapacity;
+  } catch(e) {
+    console.error('error fetching pod capacity');
+    return e;
+  }
+};
 
-//return network utilization in kilobytes per second
-export const fetchNetworkUtilization = async() => {
-  const received = await fetch('http://localhost:30000/api/v1/query?query=sum(rate(container_network_receive_bytes_total[5m]))', {
-    method: 'GET',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    }
-  }).then(res => res.json())
+// return network utilization in kilobytes per second
+export const fetchNetworkUtilization = async(endpoint = prometheusEndpoint) => {
+  const receivedResponse = await fetch(`${endpoint}sum(rate(container_network_receive_bytes_total[5m]))`);
+  const received = await handleErrors(receivedResponse);
 
-  const transmitted = await fetch('http://localhost:30000/api/v1/query?query=sum(rate(container_network_transmit_bytes_total[5m]))', {
-    method: 'GET',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    }
-  }).then(res => res.json())
+  const transmittedResponse = await fetch(`${endpoint}sum(rate(container_network_transmit_bytes_total[5m]))`);
+  const transmitted = await handleErrors(transmittedResponse);
 
-  const networkUtilization = Math.floor((parseInt(received.data.result[0].value[1]) + parseInt(transmitted.data.result[0].value[1]))/1024);
+  const networkUtilization = Math.floor((parseInt(received.data.result[0].value[1]) + parseInt(transmitted.data.result[0].value[1])) / 1024);
   return networkUtilization;
-}
+};
 
-//return network errors
-  export const fetchNetworkErrors = async() => {
-  const received = await fetch('http://localhost:30000/api/v1/query?query=sum(node_network_receive_errs_total)', {
-    method: 'GET',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    }
-  }).then(res => res.json())
+// return network errors
+export const fetchNetworkErrors = async(endpoint = prometheusEndpoint) => {
+  const receivedResponse = await fetch(`${endpoint}sum(node_network_receive_errs_total)`);
+  const received = await handleErrors(receivedResponse);
+  
+  const transmittedResponse = await fetch(`${endpoint}sum(node_network_transmit_errs_total)`);
+  const transmitted = await handleErrors(transmittedResponse);
 
-  const transmitted = await fetch('http://localhost:30000/api/v1/query?query=sum(node_network_transmit_errs_total)', {
-    method: 'GET',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    }
-  }).then(res => res.json())
-
-  const networkErrors = Math.floor((parseInt(received.data.result[0].value[1]) + parseInt(transmitted.data.result[0].value[1]))/1024);
+  const networkErrors = Math.floor((parseInt(received.data.result[0].value[1]) + parseInt(transmitted.data.result[0].value[1])) / 1024);
   return networkErrors;
-}
+};

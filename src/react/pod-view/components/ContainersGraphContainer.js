@@ -29,6 +29,8 @@ const ContainersGraphContainer = (props) => {
   const [ memorySaturationDatasets, setMemorySaturationDatasets ] = useState([]);
  
   // whenever allContainers or podName, get all current pod's containers and update state
+  // TODO: Promise.all
+  // TODO: filter all containers that meet condition
   useEffect(() => {
     const currentPodContainers = [];
     props.allContainers.forEach(container => {
@@ -151,7 +153,7 @@ const ContainersGraphContainer = (props) => {
 
   // update metric values with the results of calling the above functions and update state
   // BUG WITH SET INTERVAL: when you switch to a new pod, the previously selected pods' linecharts are still being rendered every 3 seconds**/
-  useEffect(async () => {
+  useEffect(() => {
     fetchToState();
     // const interval = setInterval(() => fetchToState(), 3000);
     // return () => clearInterval(interval);
